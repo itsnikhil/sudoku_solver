@@ -3,13 +3,13 @@ import Image
 import math
 import os
 
-init = Image.open("/home/nikhil/Downloads/output.png")
+init = Image.open("/home/nikhil/nikhil/Sudoku/output.png")
 width, height = init.size
 ss = int(math.ceil(height/9))
 
 def long_slice(out_name, outdir, slice_size):
     """slice an image into parts slice_size tall"""
-    img = Image.open("/home/nikhil/Downloads/output.png")
+    img = Image.open("/home/nikhil/nikhil/Sudoku/output.png")
     width, height = img.size
     upper = 0
     slices_height = int(math.ceil(height/slice_size))

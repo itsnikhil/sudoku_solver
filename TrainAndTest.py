@@ -8,7 +8,7 @@ import re
 import sys
 
 # module level variables ##########################################################################
-MIN_CONTOUR_AREA = 100
+MIN_CONTOUR_AREA = 60
 
 RESIZED_IMAGE_WIDTH = 20
 RESIZED_IMAGE_HEIGHT = 30
@@ -47,7 +47,7 @@ def main():
         print "error, unable to open classifications.txt, exiting program\n"
         os.system("pause")
         return
-    # end try
+    #end try
 
     try:
         npaFlattenedImages = np.loadtxt("flattened_images.txt", np.float32)                 # read in training images
@@ -55,7 +55,7 @@ def main():
         print "error, unable to open flattened_images.txt, exiting program\n"
         os.system("pause")
         return
-    # end try
+    #end try
 
     npaClassifications = npaClassifications.reshape((npaClassifications.size, 1))       # reshape numpy array to 1d, necessary to pass to call to train
 
@@ -69,7 +69,7 @@ def main():
         print "error: image not read from file \n\n"        # print error message to std out
         os.system("pause")                                  # pause so user can see error message
         return                                              # and exit function (which exits program)
-    # end if
+    #end if
 
     imgGray = cv2.cvtColor(imgTestingNumbers, cv2.COLOR_BGR2GRAY)       # get grayscale image
     imgBlurred = cv2.GaussianBlur(imgGray, (5,5), 0)                    # blur
@@ -95,13 +95,13 @@ def main():
         contourWithData.calculateRectTopLeftPointAndWidthAndHeight()                    # get bounding rect info
         contourWithData.fltArea = cv2.contourArea(contourWithData.npaContour)           # calculate the contour area
         allContoursWithData.append(contourWithData)                                     # add contour with data object to list of all contours with data
-    # end for
+        #end for
 
     for contourWithData in allContoursWithData:                 # for all contours
         if contourWithData.checkIfContourIsValid():             # check if valid
             validContoursWithData.append(contourWithData)       # if so, append to valid contour list
-        # end if
-    # end for
+        #end if
+    #end for
 
     validContoursWithData.sort(key = operator.attrgetter("intRectX"))         # sort contours from left to right
 
@@ -129,28 +129,24 @@ def main():
         strCurrentChar = str(chr(int(npaResults[0][0])))                                             # get character from results
 
         strFinalString = strFinalString + strCurrentChar            # append current char to full string
-    # end for
+    #end for
     match = re.search(r'\d', strFinalString)
+    f = open('data.txt','a')
     if not match:
         match = 0
         print match
-        return match
+        z = match
+        f.write(str(z))
     else: 
         print match.group()
-        return match.group()                # show the full string
+        z = match.group()
+        f.write(str(z))
+    f.close()
+
 
     #cv2.imshow("imgTestingNumbers", imgTestingNumbers)      # show input image with green boxes drawn around found digits
 
 ###################################################################################################
 if __name__ == "__main__":
     main()
-# end if
-
-
-
-
-
-
-
-
-
+#end if
